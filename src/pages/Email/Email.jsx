@@ -1,4 +1,4 @@
-l// pages/email.js
+// pages/email.js
 import { Container, Typography } from "@mui/material";
 import EmailTemplateSelector from "../../components/EmailTemplate/EmailTemplateSelector";
 import EmailForm from "../../components/EmailTemplate/EmailForm";

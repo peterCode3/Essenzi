@@ -1,10 +1,51 @@
 // components/DynamicEmailTemplate.js
 import { Box, Typography, Button } from "@mui/material";
-import { useState, useEffect } from "react";
-import { TextField, InputLabel } from "@mui/material";
+import React, {useState, useEffect} from "react";
 
 const DynamicEmailTemplate = ({ template }) => {
-	const [htmlContent, setHtmlContent] = useState("");
+  const morningTemplate = (
+    <Box sx={{ padding: 2, backgroundColor: "#FFFAF0" }}>
+      <Typography variant="h5" color="primary">
+        Good Morning! 🌅
+      </Typography>
+      <Typography variant="body1" sx={{ marginTop: 1 }}>
+        Start your day with a positive mindset! We are excited to help you reach your goals.
+      </Typography>
+      <Button variant="contained" color="primary" sx={{ marginTop: 2 }} >
+        Get Started
+      </Button>
+    </Box>
+  );
+
+  const afternoonTemplate = (
+    <Box sx={{ padding: 2, backgroundColor: "#FFFAE1" }}>
+      <Typography variant="h5" color="secondary">
+        Good Afternoon! ☀️
+      </Typography>
+      <Typography variant="body1" sx={{ marginTop: 1 }}>
+        Keep up the good work! We are here to assist you in the next step of your journey.
+      </Typography>
+      <Button variant="contained" color="secondary" sx={{ marginTop: 2 }} >
+        Continue Here
+      </Button>
+    </Box>
+  );
+
+  const eveningTemplate = (
+    <Box sx={{ padding: 2, backgroundColor: "#F1F1F1" }}>
+      <Typography variant="h5" color="error">
+        Good Evening! 🌙
+      </Typography>
+      <Typography variant="body1" sx={{ marginTop: 1 }}>
+        It's time to wind down. Let's reflect on your progress and set goals for tomorrow.
+      </Typography>
+      <Button variant="contained" color="error" sx={{ marginTop: 2 }}>
+        View Your Progress
+      </Button>
+    </Box>
+  );
+
+  const [htmlContent, setHtmlContent] = useState("");
 	const [previewImage, setPreviewImage] = useState("");
 
 	useEffect(() => {
@@ -20,76 +61,30 @@ const DynamicEmailTemplate = ({ template }) => {
 		<div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ maxWidth: "100%", overflow: "hidden" }} />
 	);
 
-	const smsTemplate = (
-		<Box sx={{ padding: 2, backgroundColor: "#E6F7FF" }}>
-			<Typography variant="h5" color="primary">
-				SMS Template 📱
-			</Typography>
-			<InputLabel htmlFor="sms-message" sx={{ marginTop: 2 }}>
-				Message
-			</InputLabel>
-			<TextField
-				id="sms-message"
-				variant="outlined"
-				placeholder="Enter your SMS message here"
-				multiline
-				rows={4}
-				fullWidth
-			/>
-		</Box>
-	);
+  const defaultTemplate = (
+    <Typography>Loading...</Typography>
+  );
 
-	const whatsAppTemplate = (
-		<Box sx={{ padding: 2, backgroundColor: "#E6F7FF" }}>
-			<Typography variant="h5" color="primary">
-				WhatsApp Template 📱
-			</Typography>
+  const renderTemplate = () => {
+    switch (template) {
+      case "morning":
+        return morningTemplate;
+      case "afternoon":
+        return afternoonTemplate;
+      case "evening":
+        return eveningTemplate;
+		case "dynamic":
+			return emailTemplate;
+      default:
+        return defaultTemplate;
+    }
+  };
 
-			{/* Image Upload Section */}
-			<Box sx={{ marginTop: 2, marginBottom: 2 }}>
-				<input
-					accept="image/*"
-					style={{ display: "none" }}
-					id="image-upload"
-					type="file"
-					onChange={(e) => {
-						const file = e.target.files[0];
-						if (file) {
-							const reader = new FileReader();
-							reader.onload = (e) => {
-								setPreviewImage(e.target.result);
-							};
-							reader.readAsDataURL(file);
-						}
-					}}
-				/>
-
-				{previewImage && <img src={previewImage} alt="Uploaded" style={{ maxWidth: "100%", height: "auto" }} />}
-				<label htmlFor="image-upload">
-					<Button variant="contained" component="span" sx={{ marginBottom: 2 }}>
-						Upload Image
-					</Button>
-				</label>
-			</Box>
-		</Box>
-	);
-
-	const defaultTemplate = <Typography>No template selected. Please choose a template from the dropdown.</Typography>;
-
-	const renderTemplate = () => {
-		switch (template) {
-			case "email":
-				return emailTemplate;
-			case "sms":
-				return smsTemplate;
-			case "whatsapp":
-				return whatsAppTemplate;
-			default:
-				return defaultTemplate;
-		}
-	};
-
-	return <Box sx={{ maxWidth: 600, margin: "0 auto", marginTop: 2 }}>{renderTemplate()}</Box>;
+  return (
+    <Box sx={{ maxWidth: 600, margin: "0 auto", marginTop: 2 }}>
+      {renderTemplate()}
+    </Box>
+  );
 };
 
 export default DynamicEmailTemplate;

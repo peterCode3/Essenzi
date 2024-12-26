@@ -1,16 +1,16 @@
-// pages/email.js
+// pages/index.js
 import { Container, Typography } from "@mui/material";
 import EmailTemplateSelector from "../../components/EmailTemplate/EmailTemplateSelector";
 import EmailForm from "../../components/EmailTemplate/EmailForm";
 import theme from "../../components/ThemeStyle/theme";
 import { useThemeContext } from "../../components/Context/ThemeContext";
+import DynamicEmailTemplate from "../../components/EmailTemplate/DynamicEmailTemplate";
 export default function Email() {
   const { isDarkMode } = useThemeContext();
   const backgroundColor = isDarkMode ? theme.palette.background.default : theme.palette.background.paper;
 
-  
   return (
-    <Container>
+    <div>
       <Typography variant="h4"
         sx={{
           fontWeight: "bold",
@@ -20,8 +20,9 @@ export default function Email() {
         gutterBottom>
         Dynamic Email Template Example
       </Typography>
-      <EmailTemplateSelector />
+      <EmailTemplateSelector/>
+      {/* <DynamicEmailTemplate type={"email"}/> */}
       <EmailForm />
-    </Container>
+    </div>
   );
 }

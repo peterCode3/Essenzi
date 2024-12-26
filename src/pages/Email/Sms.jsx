@@ -1,11 +1,11 @@
 import React from "react";
-import EmailTemplateSelector from "../../components/EmailTemplate/EmailTemplateSelector";
 import EmailForm from "../../components/EmailTemplate/EmailForm";
+import OtherTemplateSelector from "../../components/EmailTemplate/OtherTemplateSelector";
 
 const whatsapp = () => {
 	return (
 		<div>
-			<EmailTemplateSelector type={"sms"} />
+			<OtherTemplateSelector type={"sms"} />
 			<EmailForm />
 		</div>
 	);

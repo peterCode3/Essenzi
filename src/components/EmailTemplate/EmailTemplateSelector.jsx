@@ -17,7 +17,6 @@ const EmailTemplateSelector = ({ type }) => {
 	const [tabValue, setTabValue] = useState(0);
 	const { isDarkMode } = useThemeContext();
 	const backgroundColor = isDarkMode ? theme.palette.background.default : theme.palette.background.paper;
-
 	const handleTabChange = (event, newValue) => {
 		setTabValue(newValue);
 	};

@@ -64,10 +64,7 @@ const DynamicEmailTemplate = ({ template }) => {
 					}}
 				/>
 
-				
-				{previewImage && (
-					<img src={previewImage} alt="Uploaded" style={{ maxWidth: "100%", height: "auto" }} />
-				)}
+				{previewImage && <img src={previewImage} alt="Uploaded" style={{ maxWidth: "100%", height: "auto" }} />}
 				<label htmlFor="image-upload">
 					<Button variant="contained" component="span" sx={{ marginBottom: 2 }}>
 						Upload Image

@@ -62,7 +62,7 @@ const App = () => {
 							<Route path="userTable" element={<UserTable />} />
 							<Route path="user" element={<User />} />
 							<Route path="order-table" element={<OrderTable />} />
-							<Route path="email-template" element={<Email />} />
+							<Route path="email-template/email" element={<Email />} />
 							<Route path="templete/whatsapp" element={<WhatsApp />} />
 							<Route path="templete/sms" element={<Sms />} />
 							<Route path="customer-feedback" element={<CustomerFeedback />} />

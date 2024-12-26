@@ -1,13 +1,14 @@
-// pages/index.js
+// pages/email.js
 import { Container, Typography } from "@mui/material";
 import EmailTemplateSelector from "../../components/EmailTemplate/EmailTemplateSelector";
 import EmailForm from "../../components/EmailTemplate/EmailForm";
 import theme from "../../components/ThemeStyle/theme";
 import { useThemeContext } from "../../components/Context/ThemeContext";
-export default function Home() {
+export default function Email() {
   const { isDarkMode } = useThemeContext();
   const backgroundColor = isDarkMode ? theme.palette.background.default : theme.palette.background.paper;
 
+  
   return (
     <Container>
       <Typography variant="h4"

@@ -18,6 +18,7 @@ import {
 	Select,
 	MenuItem,
 	Slide, // Import Slide component from MUI
+	Pagination, // Import Pagination component from MUI
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,6 +40,8 @@ const UserTable = ({ type }) => {
 	const { isDarkMode } = useThemeContext();
 	const backgroundColor = isDarkMode ? themes.palette.background.default : themes.palette.background.paper;
 	const [filterCustomerBy, setFilterCustomerBy] = useState("");
+	const [page, setPage] = useState(1); // State for pagination
+	const [rowsPerPage] = useState(10); // State for rows per page
 
 	const handleActionClick = (user) => {
 		setSelectedUser(user);
@@ -74,6 +77,10 @@ const UserTable = ({ type }) => {
 		setFilterCustomerBy(event.target.value); // Handle the change in "customerByfrom" filter
 	};
 
+	const handlePageChange = (event, newPage) => {
+		setPage(newPage); // Handle the change in pagination
+	};
+
 	// Filter users based on the search query and role
 	useEffect(() => {
 		const filtered = users.filter((user) => {
@@ -90,6 +97,11 @@ const UserTable = ({ type }) => {
 		});
 		setFilteredUsers(filtered);
 	}, [filterName, filterLocation, filterPurchaseOrders, filterCustomerBy]); // Re-run the filtering when any filter changes
+
+	const paginatedUsers = filteredUsers.slice(
+		(page - 1) * rowsPerPage,
+		page * rowsPerPage
+	); // Paginate the filtered users
 
 	return (
 		<Box sx={{ minHeight: "100vh", padding: "20px" }}>
@@ -270,7 +282,7 @@ const UserTable = ({ type }) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{filteredUsers.map((user) => (
+									{paginatedUsers.map((user) => (
 									<TableRow
 										key={user.id}
 										sx={{
@@ -361,6 +373,22 @@ const UserTable = ({ type }) => {
 							<UsersProfile user={selectedUser} onBack={handleBack} />
 						</Box>
 					</Slide>
+				</Box>
+
+				{/* Pagination Section */}
+				<Box sx={{ 
+					mt: 3, 
+					display: 'flex', 
+					justifyContent: 'center',
+					pb: 2 
+				}}>
+					<Pagination
+						count={Math.ceil(filteredUsers.length / rowsPerPage)}
+						page={page}
+						onChange={handlePageChange}
+						color="primary"
+						size="large"
+					/>
 				</Box>
 			</div>
 		</Box>

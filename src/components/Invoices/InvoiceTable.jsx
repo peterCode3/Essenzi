@@ -62,12 +62,10 @@ const InvoiceTable = () => {
 
 	// Handle the download of filtered invoices data as JSON file
 	const handleDownload = () => {
-		const data = JSON.stringify(filteredInvoices, null, 2);
-		const blob = new Blob([data], { type: "application/json" });
-		const link = document.createElement("a");
-		link.href = URL.createObjectURL(blob);
-		link.download = "filtered_invoices.json";
-		link.click();
+		const worksheet = XLSX.utils.json_to_sheet(filteredInvoices);
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, "Invoice");
+		XLSX.writeFile(workbook, "invoice_data.xlsx");
 	};
 
 	const handlePageChange = (event, newPage) => {

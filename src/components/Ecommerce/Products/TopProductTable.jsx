@@ -88,9 +88,9 @@ const TopProductTable = ({actions= true, filtration = true}) => {
           value={searchTerm}
           onChange={handleSearchChange}
           fullWidth
-          sx={{ width: "24%" }}
+          sx={{ width: "40%" }}
         />
-        <FormControl sx={{ width: "24%" }}>
+        <FormControl sx={{ width: "40%" }}>
           <InputLabel>Category</InputLabel>
           <Select
             value={categoryFilter}

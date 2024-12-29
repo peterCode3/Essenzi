@@ -190,6 +190,7 @@ const Users = ({ type, showActions = true }) => {
                           <Button
                           variant="contained"
                           color="primary"
+                          
                           size="small"
                           onClick={() => handleActionClick(user)}
                           sx={{ textTransform: "none", marginRight: 1 }}>

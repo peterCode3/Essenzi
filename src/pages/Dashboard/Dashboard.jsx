@@ -5,6 +5,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { useThemeContext } from '../../components/Context/ThemeContext';
 import theme from '../../components/ThemeStyle/theme';
 import TopProductTable from '../../components/Ecommerce/Products/TopProductTable';
+import DateFilter from './DateFilter';
 
 const Dashboard = () => {
   // Filter state
@@ -102,20 +103,18 @@ const Dashboard = () => {
       {/* Filters Section */}
       <Grid container spacing={3} sx={{ marginBottom: 3, justifyContent: 'space-between' }}>
         <Grid item xs={12} sm={6} md={6}>
-          {/* Title Section */}
           <Typography
             variant="h4"
             sx={{
               fontWeight: "bold",
-              marginBottom: 4,
+              marginBottom: 2,
               color: isDarkMode ? "#fff" : "#1F2A40", // Dynamic title color
             }}
           >
             Admin Dashboard
           </Typography>
         </Grid>
-        {/* Month Selector */}
-        <Grid item xs={12} sm={6} md={4}>
+        {/* <Grid item xs={12} sm={6} md={4}>
           <FormControl fullWidth>
             <InputLabel
               sx={{
@@ -153,6 +152,10 @@ const Dashboard = () => {
               <MenuItem value="December">December</MenuItem>
             </Select>
           </FormControl>
+        </Grid> */}
+
+        <Grid item xs={12} sm={12} md={12}>
+          <DateFilter/>
         </Grid>
       </Grid>
 
@@ -384,7 +387,7 @@ const Dashboard = () => {
           >
             Top Products
           </Typography>
-          <TopProductTable />
+          <TopProductTable filtration={false} actions={false}/>
 
         </Grid>
       </Grid>

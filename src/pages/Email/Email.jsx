@@ -18,7 +18,7 @@ export default function Email() {
           color: isDarkMode ? "#fff" : "#1F2A40", // Dynamic title color
         }}  
         gutterBottom>
-        Dynamic Email Template Example
+        {/* Dynamic Email Template */}
       </Typography>
       <EmailTemplateSelector/>
       {/* <DynamicEmailTemplate type={"email"}/> */}

@@ -41,7 +41,7 @@ const EmailForm = () => {
 
 	return (
 		<Box sx={{ marginTop: 4 }} className=" flex-col items-end">
-			<UserTable type={"email"} />
+			<UserTable type={"email"} showActions= {false}/>
 			<Button className="ml-0" variant="contained" color="primary" onClick={sendEmail}>
 				Send Email
 			</Button>

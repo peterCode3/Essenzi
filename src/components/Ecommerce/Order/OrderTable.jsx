@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import * as XLSX from "xlsx"; // Import xlsx for exporting data to Excel
 import {
     Table,
     TableBody,
@@ -81,6 +82,13 @@ const OrderTable = () => {
         setFilteredOrders(filtered);
     }, [filterCustomer, filterStatus, filterOrderId, filterProduct]); 
 
+    const downloadTable = () => {
+        const worksheet = XLSX.utils.json_to_sheet(filteredOrders);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
+        XLSX.writeFile(workbook, "orders_data.xlsx");
+    };
+
     return (
         <Box sx={{ minHeight: "100vh", padding: "20px" }}>
             <div className="profile-container p-4 bg-grey-800 rounded-lg">
@@ -122,6 +130,7 @@ const OrderTable = () => {
                                     backgroundColor: theme.palette.primary.light,
                                 },
                             }}
+                            onClick={downloadTable}
                         >
                             Download Order Table
                         </Button>

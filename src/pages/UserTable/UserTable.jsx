@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UsersProfile from "../../components/UsersProfile/UsersProfile";
+import * as XLSX from "xlsx"; // Import xlsx for exporting data to Excel
 import {
 	Table,
 	TableBody,
@@ -28,7 +29,7 @@ import users from "../../data/users"; // Importing users data from external file
 import themes from "../../components/ThemeStyle/theme";
 import { useThemeContext } from "../../components/Context/ThemeContext";
 
-const UserTable = ({ type }) => {
+const UserTable = ({ type, showActions = true }) => {
 	const [filteredUsers, setFilteredUsers] = useState(users);
 	const [selectedUser, setSelectedUser] = useState(null);
 	const [filterRole, setFilterRole] = useState("");
@@ -103,6 +104,15 @@ const UserTable = ({ type }) => {
 		page * rowsPerPage
 	); // Paginate the filtered users
 
+
+	const downloadTable = () => {
+		const worksheet = XLSX.utils.json_to_sheet(filteredUsers);
+		const workbook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+		XLSX.writeFile(workbook, "users_data.xlsx");
+	};
+
+
 	return (
 		<Box sx={{ minHeight: "100vh", padding: "20px" }}>
 			<div className="profile-container p-4 bg-grey-800 rounded-lg">
@@ -144,7 +154,10 @@ const UserTable = ({ type }) => {
 								"&:active": {
 									backgroundColor: theme.palette.primary.light,
 								},
-							}}>
+							}}
+							onClick={downloadTable}
+						>
+
 							Download User's Table
 						</Button>
 					)}
@@ -162,14 +175,16 @@ const UserTable = ({ type }) => {
 						sx={{ width: "24%" }}
 					/>
 					{/* Location Filter */}
-					<TextField
-						label="Search by Location"
-						variant="outlined"
-						size="small"
-						value={filterLocation}
-						onChange={handleLocationChange}
-						sx={{ width: "24%" }}
-					/>
+					{(filterCustomerBy === "Website" || filterCustomerBy === "") && (
+						<TextField
+							label="Search by Location"
+							variant="outlined"
+							size="small"
+							value={filterLocation}
+							onChange={handleLocationChange}
+							sx={{ width: "24%" }}
+						/>
+					)}
 					{/* Purchase Orders Filter */}
 					<TextField
 						label="Search by Purchase Orders"
@@ -189,6 +204,21 @@ const UserTable = ({ type }) => {
 							<MenuItem value="Website">Website</MenuItem>
 						</Select>
 					</FormControl>
+					{filterCustomerBy === "POS" && (
+						<FormControl size="small" sx={{ width: "24%" }}>
+							<InputLabel>Search by POS Location</InputLabel>
+							<Select value={filterLocation} onChange={(event) => setFilterLocation(event.target.value)} label="Search by POS Location">
+								<MenuItem value="">All POS Locations</MenuItem>
+								<MenuItem value="Sahara centre mall">Sahara centre mall</MenuItem>
+								<MenuItem value="Dubai outlet mall">Dubai outlet mall</MenuItem>
+								<MenuItem value="Silicon central mall">Silicon central mall</MenuItem>
+								<MenuItem value="Burjuman mall">Burjuman mall</MenuItem>
+								<MenuItem value="AL wahda mall">AL wahda mall</MenuItem>
+								<MenuItem value="Bawadi mall">Bawadi mall</MenuItem>
+								<MenuItem value="AL ghurair centre mall">AL ghurair centre mall</MenuItem>
+							</Select>
+						</FormControl>
+					)}
 				</Box>
 
 				{/* User Table Section */}
@@ -269,20 +299,22 @@ const UserTable = ({ type }) => {
 										Join Date
 									</TableCell>
 
-									<TableCell
-										sx={{
-											border: "1px solid",
-											borderColor: theme.palette.divider,
-											fontWeight: "bold",
-											backgroundColor,
-											color: themes.palette.text,
-										}}>
-										Actions
-									</TableCell>
+									{showActions && (
+										<TableCell
+											sx={{
+												border: "1px solid",
+												borderColor: theme.palette.divider,
+												fontWeight: "bold",
+												backgroundColor,
+												color: themes.palette.text,
+											}}>
+											Actions
+										</TableCell>
+									)}
 								</TableRow>
 							</TableHead>
 							<TableBody>
-									{paginatedUsers.map((user) => (
+								{paginatedUsers.map((user) => (
 									<TableRow
 										key={user.id}
 										sx={{
@@ -309,33 +341,34 @@ const UserTable = ({ type }) => {
 											{user.purchaseOrders}
 										</TableCell>
 										<TableCell sx={{ border: "1px solid", borderColor: theme.palette.divider }}>{user.dob}</TableCell>
-
-										<TableCell sx={{ border: "1px solid", borderColor: theme.palette.divider }}>
-											<Button
-												variant="contained"
-												color="primary"
-												size="small"
-												onClick={() => handleActionClick(user)}
-												sx={{ textTransform: "none", marginRight: 1 }}>
-												<AccountCircleIcon /> View Account
-											</Button>
-											<Button
-												variant="contained"
-												color="warning"
-												size="small"
-												onClick={() => handleActionClick(user)}
-												sx={{ textTransform: "none", marginRight: 1 }}>
-												<EditIcon /> Edit
-											</Button>
-											<Button
-												variant="contained"
-												color="error"
-												size="small"
-												onClick={() => handleDelete(user.id)}
-												sx={{ textTransform: "none" }}>
-												<DeleteIcon /> Delete
-											</Button>
-										</TableCell>
+										{showActions && (
+											<TableCell sx={{ border: "1px solid", borderColor: theme.palette.divider }}>
+												<Button
+													variant="contained"
+													color="primary"
+													size="small"
+													onClick={() => handleActionClick(user)}
+													sx={{ textTransform: "none", marginRight: 1 }}>
+													<AccountCircleIcon /> View Account
+												</Button>
+												<Button
+													variant="contained"
+													color="warning"
+													size="small"
+													onClick={() => handleActionClick(user)}
+													sx={{ textTransform: "none", marginRight: 1 }}>
+													<EditIcon /> Edit
+												</Button>
+												<Button
+													variant="contained"
+													color="error"
+													size="small"
+													onClick={() => handleDelete(user.id)}
+													sx={{ textTransform: "none" }}>
+													<DeleteIcon /> Delete
+												</Button>
+											</TableCell>
+										)}
 									</TableRow>
 								))}
 							</TableBody>
@@ -376,11 +409,11 @@ const UserTable = ({ type }) => {
 				</Box>
 
 				{/* Pagination Section */}
-				<Box sx={{ 
-					mt: 3, 
-					display: 'flex', 
+				<Box sx={{
+					mt: 3,
+					display: 'flex',
 					justifyContent: 'center',
-					pb: 2 
+					pb: 2
 				}}>
 					<Pagination
 						count={Math.ceil(filteredUsers.length / rowsPerPage)}

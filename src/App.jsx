@@ -22,6 +22,12 @@ import InvoiceTable from "./components/Invoices/InvoiceTable";
 const MyContext = createContext();
 import { useThemeContext } from "./components/Context/ThemeContext";
 import CustomerFeedback from "./pages/CustomerFeedback/CustomerFeedback";
+import SettingsPage from "./pages/Settings/SettingsPage";
+import MyAccount from "./pages/User/MyAccount";
+import InventoryProducts from "./pages/Products/InventoryProducts";
+import AddUser from "./pages/Users/AddUsers";
+import UserRolesPage from "./pages/Users/UserRolesPage";
+
 const LayoutWithSidebar = () => {
 	// Get the current theme mode from context
 	const { themeMode } = useContext(MyContext);
@@ -58,7 +64,9 @@ const App = () => {
 							<Route index element={<Dashboard />} />
 							<Route path="client" element={<Clients />} />
 
-							<Route path="users" element={<Users />} />
+							<Route path="user-list" element={<Users />} />
+							<Route path="add-user" element={<AddUser />} />
+							<Route path="user-roles" element={<UserRolesPage />} />
 							<Route path="userTable" element={<UserTable />} />
 							<Route path="user" element={<User />} />
 							<Route path="order-table" element={<OrderTable />} />
@@ -67,6 +75,10 @@ const App = () => {
 							<Route path="templete/sms" element={<Sms />} />
 							<Route path="customer-feedback" element={<CustomerFeedback />} />
 							<Route path="invoice-table" element={<InvoiceTable />} />
+							<Route path="/settings" element={<SettingsPage />} />
+							<Route path="/my-account" element={<MyAccount />} />
+							<Route path="/inventory-products" element={<InventoryProducts />} />
+							
 						</Route>
 						{/* Layout without Sidebar and Header */}
 						<Route path="/login" element={<Signin />} />

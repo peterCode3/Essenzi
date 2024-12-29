@@ -40,3 +40,44 @@ body{
 .main .sidebarWrapper .sidebar .sidebarTabs button{
     justify-content: flex-start;
 }
+
+.settings-page .tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+.tab-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.tab-btn.active {
+  background-color: #1F2A40;
+  color: white;
+}
+.tab-content {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.preview-image,
+.profile-preview {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+.color-picker {
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+}
+.save-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #EBF3EC;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

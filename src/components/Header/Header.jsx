@@ -157,12 +157,7 @@ const Header = () => {
               </Link>
 
             </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <IoIosMail size={20} style={{ color: '#1F2A40' }} />
-              </ListItemIcon>
-            <Typography variant="body2">Messages</Typography>
-            </MenuItem>
+            
             <Divider />
             <MenuItem>
                 <ListItemIcon>

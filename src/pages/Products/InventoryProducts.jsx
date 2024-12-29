@@ -22,7 +22,7 @@ function InventoryProducts() {
                         }}
 
                     >
-                        Inventry Products
+                        Inventory Products
                     </Typography>
                     <TopProductTable filtration={true} actions={true} />
 
